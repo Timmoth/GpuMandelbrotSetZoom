@@ -10,10 +10,24 @@
     <canvas id="canvas"></canvas>
     <script src="dist/Mandelbrot.js"></script>
     <script>
-        window.onload = function () {
-            var m = new Mandelbrot();
-            m.Start();
-        }
+            var m = null;
+            window.onload = function () {
+                if (m == null) {
+                    m = new Mandelbrot();
+                }
+                m.Start();
+
+                addEventListener('pagehide', (event) => {
+                    m.Stop();
+                });
+            }
+
+            window.unload = function () {
+                if (m == null) {
+                    return;
+                }
+                m.Stop();
+            }
     </script>
 </body>
 </html>

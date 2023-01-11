@@ -7,6 +7,9 @@ export default class App {
   cube: THREE.Mesh;
   material: THREE.ShaderMaterial;
   time: number;
+  zoomIn: boolean;
+  nexPosition: THREE.Vec2;
+
   constructor() {
     let canvas = document.getElementById("canvas") as HTMLCanvasElement;
     const width = (canvas.width = 500);
@@ -78,13 +81,19 @@ export default class App {
   }
 
   Start() {
+    this.running = true;
     this.tick();
   }
 
-  zoomIn: boolean;
-  nexPosition: THREE.Vec2;
+  Stop() {
+    this.running = false;
+  }
+
+  running: boolean;
 
   tick() {
+    if (!this.running) return;
+
     this.time += 0.04;
     var position = this.material.uniforms.u_zoomCenter.value as THREE.Vec2;
     var dX = this.nexPosition.x - position.x;
