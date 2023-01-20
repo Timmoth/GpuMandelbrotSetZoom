@@ -1,32 +1,37 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-  entry: './src/Mandelbrot.ts',
+  entry: "./src/index.tsx",
+  mode: "development",
   module: {
     rules: [
       {
-        test: /\.ts?$/,
-        use: 'ts-loader',
+        test: /\.(ts|tsx)$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: "babel-loader",
+        options: { presets: ["@babel/env"] },
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(glsl|vs|fs|vert|frag)$/,
         exclude: /node_modules/,
+        use: ["raw-loader", "glslify-loader"],
       },
     ],
   },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+  resolve: { extensions: ["*", ".js", ".jsx"] },
+  experiments: {
+    outputModule: true,
   },
   output: {
-    filename: 'Mandelbrot.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath:'/dist/',
-    library: 'Mandelbrot',
-    libraryTarget:'umd', 
-    umdNamedDefine: true,
-    libraryExport: 'default' 
-    
-  },
-  devServer: {
-    static: path.join(__dirname, "dist"),
-    compress: true,
-    port: 4000,
+    filename: "mandelbrot.js",
+    path: path.resolve(__dirname, "dist"),
+
+    library: {
+      type: "module",
+    },
   },
 };

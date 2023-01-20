@@ -1,33 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-    <canvas id="canvas"></canvas>
-    <script src="dist/Mandelbrot.js"></script>
-    <script>
-            var m = null;
-            window.onload = function () {
-                if (m == null) {
-                    m = new Mandelbrot();
-                }
-                m.Start();
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import { Start, Stop } from "./dist/mandelbrot.js";
+      window.onload = function () {
+        Start();
+      };
 
-                addEventListener('pagehide', (event) => {
-                    m.Stop();
-                });
-            }
-
-            window.unload = function () {
-                if (m == null) {
-                    return;
-                }
-                m.Stop();
-            }
+      window.onunload = function () {
+        Stop();
+      };
     </script>
-</body>
+
+    <script></script>
+  </body>
 </html>
