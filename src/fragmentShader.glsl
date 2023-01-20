@@ -11,7 +11,7 @@ vec3 hsl2rgb(in vec3 c) { // © 2014 Inigo Quilez, MIT license, see https://www.
 }
 
 void main() {
-    vec2 uv = gl_FragCoord.xy / u_size;
+    vec2 uv = gl_FragCoord.xy / vec2(500, 500);
     vec2 c = u_zoomCenter + (uv * 4.0 - vec2(2.0)) * (u_zoomSize / 4.0);
     vec2 x = vec2(0.0);
 
