@@ -2,6 +2,8 @@ precision highp float;
 
 uniform vec2 u_zoomCenter;
 uniform float u_zoomSize;
+uniform vec2 u_size;
+uniform float u_maxIterations;
 
 vec3 hsl2rgb(in vec3 c) { // © 2014 Inigo Quilez, MIT license, see https://www.shadertoy.com/view/lsS3Wc
     vec3 rgb = clamp(abs(mod(c.x * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
@@ -9,7 +11,7 @@ vec3 hsl2rgb(in vec3 c) { // © 2014 Inigo Quilez, MIT license, see https://www.
 }
 
 void main() {
-    vec2 uv = gl_FragCoord.xy / vec2(500.0, 500.0);
+    vec2 uv = gl_FragCoord.xy / u_size;
     vec2 c = u_zoomCenter + (uv * 4.0 - vec2(2.0)) * (u_zoomSize / 4.0);
     vec2 x = vec2(0.0);
 
@@ -19,10 +21,10 @@ void main() {
         if(length(x) > 2.0) {
             break;
         }
-    } while(++iterations <= 1000.0);
+    } while(++iterations <= u_maxIterations);
 
-    if(iterations < 1000.0) {
-        float l = -log(iterations / 1000.0);
+    if(iterations < u_maxIterations) {
+        float l = -log(iterations / u_maxIterations);
         vec3 hsl = vec3(l, 0.5, 0.5);
         gl_FragColor = vec4(hsl2rgb(hsl), 1);
     } else {

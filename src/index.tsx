@@ -24,12 +24,6 @@ const ShaderPlane = () => {
       u_size: {
         value: new THREE.Vector2(size.width, size.height),
       },
-      u_lightCount: {
-        value: 100.0,
-      },
-      u_radius: {
-        value: 100.0,
-      },
       u_zoomCenter: {
         value: nexPosition,
       },
@@ -84,18 +78,7 @@ const ShaderPlane = () => {
   });
 
   return (
-    <mesh
-      ref={mesh}
-      scale={[viewport.width, viewport.height, 1]}
-      onPointerMove={(e) => {
-        e.stopPropagation();
-        let x = e.x / size.width;
-        let y = e.y / size.height;
-
-        uniforms.u_lightCount.value = x * 50 + 5;
-        uniforms.u_radius.value = y * 200 + 5;
-      }}
-    >
+    <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
       <planeGeometry args={[1, 1]} />
       <shaderMaterial
         fragmentShader={fragmentShader}
